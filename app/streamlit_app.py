@@ -24,6 +24,25 @@ from src.inference import gradcam_overlay, load_model, predict  # noqa: E402
 
 SAMPLES_DIR = ROOT / "samples"
 
+# Plain-language description of every class the model can predict.
+CLASS_INFO = {
+    "Apple · Apple scab": "Fungal disease (*Venturia inaequalis*): olive-green to "
+    "black scabby spots on leaves and fruit.",
+    "Apple · healthy": "A healthy apple leaf — no disease detected.",
+    "Potato · Early blight": "Fungal disease (*Alternaria solani*): brown spots "
+    "with concentric 'target' rings, usually on older leaves.",
+    "Potato · Late blight": "Serious disease (*Phytophthora infestans*): dark, "
+    "water-soaked blotches — the same pathogen behind the Irish potato famine.",
+    "Potato · healthy": "A healthy potato leaf — no disease detected.",
+    "Tomato · Early blight": "Fungal disease (*Alternaria*): dark concentric-ring "
+    "spots, typically starting on the lower leaves.",
+    "Tomato · Late blight": "Aggressive disease (*Phytophthora infestans*): large "
+    "greasy dark lesions that spread very fast.",
+    "Tomato · Leaf Mold": "Fungal disease (*Passalora fulva*): yellow patches on "
+    "top of the leaf and olive mould underneath, in humid conditions.",
+    "Tomato · healthy": "A healthy tomato leaf — no disease detected.",
+}
+
 st.set_page_config(page_title="LeafDoctor", page_icon="🌱", layout="wide")
 
 # --- light cosmetic styling -------------------------------------------------
@@ -153,10 +172,25 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
+st.caption(
+    f"**Confidence** is how sure the model is about **{top['label']}** — "
+    "its estimated probability for that class."
+)
+
 st.markdown("#### Top predictions")
+st.caption(
+    "Each value is the model's probability for that class (all classes sum to "
+    "100%). The bars show the same numbers — a quick view of the runner-ups."
+)
 for p in preds:
     st.write(f"**{p['label']}** — {p['probability']:.1%}")
     st.progress(min(1.0, float(p["probability"])))
+
+with st.expander("🌿 What do these labels mean?"):
+    st.caption("Every class is a crop followed by its condition — healthy or a "
+               "specific disease.")
+    for c in lm.classes:
+        st.markdown(f"- **{c}** — {CLASS_INFO.get(c, 'Plant leaf class.')}")
 
 with st.expander("ℹ️ What is Grad-CAM?"):
     st.write(

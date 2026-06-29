@@ -121,15 +121,20 @@ python -m src.train --backbone efficientnet_b0 --unfreeze --epochs 12
 
 ## 📊 Results
 
-Trained on a laptop **CPU** in a few minutes (feature-caching path), on a 9-class
-subset (Tomato / Potato / Apple, healthy + diseased), ~250 images per class:
+Trained on a laptop **CPU** (feature-caching path, no GPU), on a 9-class subset
+(Tomato / Potato / Apple, healthy + diseased):
 
-| Backbone | Mode | Val accuracy |
-|---|---|---|
-| MobileNetV3-Small | light (frozen) | **0.91** |
-| EfficientNet-B0 | fine-tuned (GPU) | _try on Colab for higher_ |
+| Backbone | Mode | Images/class | Val accuracy |
+|---|---|---|---|
+| MobileNetV3-Small | frozen, 160px | 250 | 0.91 |
+| EfficientNet-B0 | frozen, 224px | 500 | **0.97** |
 
-Reproduce with `python -m src.get_data --per-class 250 && python -m src.train`.
+Reproduce the best run:
+```bash
+python -m src.get_data --per-class 500
+python -m src.train --backbone efficientnet_b0 --img-size 224 --per-class-cap 500 --epochs 80
+```
+Full fine-tuning (`--unfreeze`) on a GPU can push it even higher.
 
 **Grad-CAM** — the heatmap lands right on the diseased lesions:
 
