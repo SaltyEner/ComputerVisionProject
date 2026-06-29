@@ -1,0 +1,21 @@
+services:
+  api:
+    build: .
+    image: petvision
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./artifacts:/app/artifacts:ro
+
+  streamlit:
+    image: petvision
+    command: >
+      streamlit run app/streamlit_app.py
+      --server.port 8501 --server.address 0.0.0.0
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./artifacts:/app/artifacts:ro
+      - ./app:/app/app:ro
+    depends_on:
+      - api

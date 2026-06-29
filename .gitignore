@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+
+# Data & model artifacts (downloaded / generated, not committed)
+data/
+artifacts/*.pt
+artifacts/*.png
+artifacts/metrics.json
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/

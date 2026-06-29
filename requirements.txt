@@ -1,0 +1,19 @@
+# Core deep learning
+torch>=2.2
+torchvision>=0.17
+
+# Data / ML utilities
+numpy>=1.26
+pillow>=10.0
+scikit-learn>=1.4
+matplotlib>=3.8
+tqdm>=4.66
+
+# Serving
+streamlit>=1.33
+fastapi>=0.110
+uvicorn[standard]>=0.29
+python-multipart>=0.0.9
+
+# Dev / test
+pytest>=8.0
