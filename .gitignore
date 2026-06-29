@@ -12,6 +12,9 @@ artifacts/*.pt
 artifacts/*.png
 artifacts/metrics.json
 
+# Personal study notes (kept local, not published)
+spiegazione.md
+
 # OS / editor
 .DS_Store
 .idea/

@@ -22,6 +22,8 @@ Two front-ends ship with it: an interactive **Streamlit** demo and a containeris
 > augmentation, model explainability and a production-style serving setup —
 > **tuned to train on a plain laptop CPU**.
 
+<p align="center"><img src="docs/demo.gif" width="760" alt="LeafDoctor demo"/></p>
+
 ---
 
 ## ✨ Highlights
@@ -107,7 +109,11 @@ uvicorn api.main:app --reload
 curl -F "file=@leaf.jpg" http://localhost:8000/predict
 ```
 
-Heavy full fine-tuning (best on a GPU, e.g. Google Colab):
+No leaf photo at hand? A few ready-to-try images live in [`samples/`](samples).
+
+Heavy full fine-tuning is best on a GPU — open
+[`notebooks/train_colab.ipynb`](notebooks/train_colab.ipynb) in Google Colab
+(free GPU), or run locally:
 
 ```bash
 python -m src.train --backbone efficientnet_b0 --unfreeze --epochs 12
